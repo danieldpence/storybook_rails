@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails"
-require "actionview/storybook"
+require "action_view/storybook"
 
 module ActionView
   module Storybook
