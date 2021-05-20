@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Storybook for Rails Partials"
   spec.description   = "Generate Storybook CSF JSON for rendering Rails View Partials in Storybook"
-  spec.homepage      = "https://github.com/danieldpence/view_component_storybook"
+  spec.homepage      = "https://github.com/danieldpence/actionview_storybook"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
