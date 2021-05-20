@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ViewComponent
+module StorybookRails
   module Storybook
     class StoryConfig
       include ActiveModel::Validations
@@ -38,7 +38,7 @@ module ViewComponent
 
       def self.configure(id, name, component, layout, &configuration)
         config = new(id, name, component, layout)
-        ViewComponent::Storybook::Dsl::StoryDsl.evaluate!(config, &configuration)
+        ActionView::Storybook::Dsl::StoryDsl.evaluate!(config, &configuration)
         config
       end
 

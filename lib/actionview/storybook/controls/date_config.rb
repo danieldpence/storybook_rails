@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ViewComponent
+module ActionView
   module Storybook
     module Controls
       class DateConfig < ControlConfig

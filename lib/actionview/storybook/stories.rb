@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ViewComponent
+module ActionView
   module Storybook
     class Stories
       extend ActiveSupport::DescendantsTracker

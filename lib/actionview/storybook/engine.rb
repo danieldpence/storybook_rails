@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require "rails"
-require "view_component/storybook"
+require "actionview/storybook"
 
-module ViewComponent
+module ActionView
   module Storybook
     class Engine < Rails::Engine
-      config.view_component_storybook = ActiveSupport::OrderedOptions.new
+      config.action_view_storybook = ActiveSupport::OrderedOptions.new
 
-      initializer "view_component_storybook.set_configs" do |app|
-        options = app.config.view_component_storybook
+      initializer "action_view_storybook.set_configs" do |app|
+        options = app.config.action_view_storybook
 
         options.show_stories = Rails.env.development? if options.show_stories.nil?
 
@@ -17,23 +17,23 @@ module ViewComponent
           options.stories_path ||= defined?(Rails.root) ? Rails.root.join("test/components/stories") : nil
         end
 
-        ActiveSupport.on_load(:view_component_storybook) do
+        ActiveSupport.on_load(:action_view_storybook) do
           options.each { |k, v| send("#{k}=", v) }
         end
       end
 
-      initializer "view_component.set_autoload_paths" do |app|
-        options = app.config.view_component_storybook
+      initializer "action_view_storybook.set_autoload_paths" do |app|
+        options = app.config.action_view_storybook
 
         ActiveSupport::Dependencies.autoload_paths << options.stories_path if options.show_stories && options.stories_path
       end
 
       config.after_initialize do |app|
-        options = app.config.view_component_storybook
+        options = app.config.action_view_storybook
 
         if options.show_stories
           app.routes.prepend do
-            get "/rails/stories/*stories/:story" => "view_component/storybook/stories#show", :internal => true
+            get "storybook/*stories/:story" => "storybook#show", :internal => true
           end
         end
       end

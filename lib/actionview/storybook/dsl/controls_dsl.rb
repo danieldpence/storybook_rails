@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ViewComponent
+module ActionView
   module Storybook
     module Dsl
       class ControlsDsl
@@ -94,7 +94,7 @@ module ViewComponent
           end
         end
 
-        Controls = ViewComponent::Storybook::Controls
+        Controls = ActionView::Storybook::Controls
       end
     end
   end

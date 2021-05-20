@@ -2,7 +2,7 @@
 
 require "active_support/dependencies/autoload"
 
-module ViewComponent
+module ActionView
   module Storybook
     module Controls
       extend ActiveSupport::Autoload
