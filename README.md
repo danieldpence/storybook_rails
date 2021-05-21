@@ -1,6 +1,6 @@
-# ViewComponent::Storybook
+# ActionView::Storybook
 
-The ViewComponent::Storybook gem provides Ruby api for writing stories describing [View Components](https://github.com/github/view_component) and allowing them to be previewed and tested in [Storybook](https://github.com/storybookjs/storybook/)
+The ActionView::Storybook gem provides Ruby api for writing stories describing Rails partials and allowing them to be previewed and tested in [Storybook](https://github.com/storybookjs/storybook/). This gem is a fork of the fantastic [ViewComponent::Storybook](https://github.com/jonspalmer/view_component_storybook) and has been adapted to work with standard Rails view partials.
 
 ## Features
 * A Ruby DSL for writing Stories describing View Components
@@ -11,9 +11,9 @@ The ViewComponent::Storybook gem provides Ruby api for writing stories describin
 
 ### Rails Installation
 
-1. Add the `view_component_storybook` gem, to your Gemfile: `gem 'view_component_storybook'`
+1. Add the `action_view_storybook` gem, to your Gemfile: `gem 'action_view_storybook'`
 2. Run `bundle install`.
-3. Add `require "view_component/storybook/engine"` to `config/application.rb`
+3. Add `require "action_view/storybook/engine"` to `config/application.rb`
 4. Add `**/*.stories.json` to `.gitignore`
 
 #### Configure Asset Hosts
@@ -67,35 +67,63 @@ Equivalent configuration will be necessary in `config/production.rb` or `applica
 
 ### Writing Stories
 
-`ViewComponent::Storybook::Stories` provides a way to preview components in Storybook.
+`ActionView::Storybook::Stories` provides a way to preview Rails partials in Storybook.
 
-Suppose our app has a `ButtonComponent` that takes a `button_text` parameter:
+Suppose our app has a shared `_button.html.erb` partial:
+
+```erb
+<% variant_class_map = {
+  primary: "button",
+  secondary: "button-secondary",
+  outline: "button-outline",
+} %>
+
+<button class="<%= variant_class_map[variant.to_sym] %>">
+  <%= button_text %>
+</button>
+```
+
+We can write a stories describing the `_button.html.erb` partial:
 
 ```ruby
-class ButtonComponent < ViewComponent::Base
-  def initialize(button_text:)
-    @button_text = button_text
+# buttons/button_stories.rb
+
+class Buttons::ButtonStories < ActionView::Storybook::Stories
+  self.title = "Buttons"
+
+  story(:primary) do
+    controls do
+      text(:button_text, "Primary")
+    end
+  end
+
+  story(:secondary) do
+    controls do
+      text(:button_text, "Secondary")
+    end
+  end
+
+  story(:outline) do
+    controls do
+      text(:button_text, "Outline")
+    end
   end
 end
 ```
 
-We can write a stories describing the `ButtonComponent`
+And a story template to render individual stories:
+```erb
+# buttons/button_stories.html.erb
 
-```ruby
-class ButtonComponentStories < ViewComponent::Storybook::Stories
-  story(:with_short_text) do
-    controls do
-      text(:button_text, 'OK')
-    end
-  end
-
-  story(:with_long_text) do
-    controls do
-      text(:button_text, 'Push Me Please!')
-    end
-  end
-end
+<%= render partial: "button",
+      button_text: params[:button_text],
+      variant: params[:story_name] %>
 ```
+
+It's up to you how handle rendering your partials in Storybook.
+
+#### Templates
+By default, `action_view_storybook` will expect to find a partial next to your story file called `<whatever>_stories.html.erb`. You can specify a different partial template to be used at the story level. See The Story DSL for more info.
 
 ### Generating Storybook Stories JSON
 

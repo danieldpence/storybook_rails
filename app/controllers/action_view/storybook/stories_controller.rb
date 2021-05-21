@@ -2,7 +2,7 @@
 
 require "rails/application_controller"
 
-module ViewComponent
+module ActionView
   module Storybook
     class StoriesController < Rails::ApplicationController
       prepend_view_path File.expand_path("../../../views", __dir__)
@@ -27,12 +27,12 @@ module ViewComponent
       private
 
       def show_stories?
-        ViewComponent::Storybook.show_stories
+        ActionView::Storybook.show_stories
       end
 
       def find_stories
         stories_name = params[:stories]
-        @stories = ViewComponent::Storybook::Stories.find_stories(stories_name)
+        @stories = ActionView::Storybook::Stories.find_stories(stories_name)
 
         head :not_found unless @stories
       end
