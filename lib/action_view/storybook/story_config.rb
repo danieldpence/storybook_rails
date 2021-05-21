@@ -1,26 +1,37 @@
 # frozen_string_literal: true
 
-module StorybookRails
+module ActionView
   module Storybook
     class StoryConfig
       include ActiveModel::Validations
 
-      attr_reader :id, :name, :component
+      attr_reader :id, :name, :component, :template
       attr_accessor :controls, :parameters, :layout, :content_block
 
       validate :valid_controls
 
-      def initialize(id, name, component, layout)
+      def initialize(id, name, component, layout, template)
         @id = id
         @name = name
         @component = component
         @layout = layout
+        @template = template
         @controls = []
       end
 
       def to_csf_params
-        validate!
-        csf_params = { name: name, parameters: { server: { id: id } } }
+        # validate!
+        csf_params = { 
+          name: pretty_name(name),
+          parameters: { 
+            server: { 
+              id: id,
+              params: { 
+                story_name: name 
+              } 
+            } 
+          }
+        }
         csf_params.deep_merge!(parameters: parameters) if parameters.present?
         controls.each do |control|
           csf_params.deep_merge!(control.to_csf_params)
@@ -36,10 +47,14 @@ module StorybookRails
         end.to_h
       end
 
-      def self.configure(id, name, component, layout, &configuration)
-        config = new(id, name, component, layout)
+      def self.configure(id, name, component, layout, template, &configuration)
+        config = new(id, name, component, layout, template)
         ActionView::Storybook::Dsl::StoryDsl.evaluate!(config, &configuration)
         config
+      end
+
+      def pretty_name(name)
+        name.to_s.humanize.titlecase
       end
 
       protected

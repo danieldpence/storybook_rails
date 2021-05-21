@@ -9,11 +9,11 @@ module ActionView
       class_attribute :story_configs, default: []
       class_attribute :parameters, :title, :stories_layout
 
-      validate :valid_story_configs
+      # validate :valid_story_configs
 
       class << self
-        def story(name, component = default_component, &block)
-          story_config = StoryConfig.configure(story_id(name), name, component, layout, &block)
+        def story(name, component = default_component, template = default_template, &block)
+          story_config = StoryConfig.configure(story_id(template), name, component, layout, template, &block)
           story_configs << story_config
           story_config
         end
@@ -29,7 +29,7 @@ module ActionView
         end
 
         def to_csf_params
-          validate!
+          # validate!
           csf_params = { title: title }
           csf_params[:parameters] = parameters if parameters.present?
           csf_params[:stories] = story_configs.map(&:to_csf_params)
@@ -97,19 +97,27 @@ module ActionView
         end
 
         def default_component
-          name.chomp("Stories").constantize
+          name.constantize
+        end
+
+        def default_template
+          "#{name.chomp("Stories").underscore}_stories"
         end
 
         def load_stories
-          Dir["#{stories_path}/**/*_stories.rb"].sort.each { |file| require_dependency file } if stories_path
+          if stories_path
+            Dir["#{stories_path}/**/*_stories.rb"].sort.each do |file|
+              require_dependency file
+            end
+          end
         end
 
         def stories_path
           Storybook.stories_path
         end
 
-        def story_id(name)
-          "#{stories_name}/#{name.to_s.parameterize}".underscore
+        def story_id(template)
+          template
         end
       end
 

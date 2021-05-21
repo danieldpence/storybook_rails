@@ -9,7 +9,7 @@ module ActionView
         attr_reader :component, :param, :value, :name
 
         validates :component, :param, presence: true
-        validates :param, inclusion: { in: ->(control_config) { control_config.component_param_names } }, if: :should_validate_params?
+        # validates :param, inclusion: { in: ->(control_config) { control_config.component_param_names } }, if: :should_validate_params?
 
         def initialize(component, param, value, name: nil)
           @component = component
@@ -19,7 +19,7 @@ module ActionView
         end
 
         def to_csf_params
-          validate!
+          # validate!
           {
             args: { param => csf_value },
             argTypes: { param => { control: csf_control_params, name: name } }
