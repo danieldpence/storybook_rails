@@ -12,8 +12,8 @@ module ActionView
       # validate :valid_story_configs
 
       class << self
-        def story(name, component = default_component, template = default_template, &block)
-          story_config = StoryConfig.configure(story_id(template), name, component, layout, template, &block)
+        def story(name, template = default_template, &block)
+          story_config = StoryConfig.configure(story_id(template), name, default_component, layout, template, &block)
           story_configs << story_config
           story_config
         end
