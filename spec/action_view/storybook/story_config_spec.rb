@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::StoryConfig do
+RSpec.describe ActionView::Storybook::StoryConfig do
   subject do
     described_class.new("example_story_config", "Example Story Config", ExampleComponent, false)
   end
 
   describe "#valid?" do
     it "duplicate controls are invalid" do
-      subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
-      subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "Not OK!")
+      subject.controls << ActionView::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
+      subject.controls << ActionView::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "Not OK!")
 
       expect(subject.valid?).to eq(false)
       expect(subject.errors[:controls].length).to eq(1)
     end
 
     it "duplicate controls with different types are invalid" do
-      subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
-      subject.controls << ViewComponent::Storybook::Controls::NumberConfig.new(:number, ExampleComponent, :title, 666)
+      subject.controls << ActionView::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
+      subject.controls << ActionView::Storybook::Controls::NumberConfig.new(:number, ExampleComponent, :title, 666)
       expect(subject.valid?).to eq(false)
       expect(subject.errors[:controls].length).to eq(1)
     end
 
     it "validates child controls" do
       # This control is invalid because its param doesn't match the components args
-      subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :junk, "OK")
+      subject.controls << ActionView::Storybook::Controls::TextConfig.new(ExampleComponent, :junk, "OK")
       expect(subject.valid?).to eq(false)
       expect(subject.errors[:controls].length).to eq(1)
     end
@@ -43,7 +43,7 @@ RSpec.describe ViewComponent::Storybook::StoryConfig do
 
     context "with controls" do
       before do
-        subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
+        subject.controls << ActionView::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
       end
 
       it "writes csf params" do
@@ -85,7 +85,7 @@ RSpec.describe ViewComponent::Storybook::StoryConfig do
 
     context "with controls and params" do
       before do
-        subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
+        subject.controls << ActionView::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
         subject.parameters = { size: :large, color: :red }
       end
 
@@ -112,7 +112,7 @@ RSpec.describe ViewComponent::Storybook::StoryConfig do
     context "with invalid config" do
       before do
         # This control is invalid because its param doesn't match the components args
-        subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :junk, "OK")
+        subject.controls << ActionView::Storybook::Controls::TextConfig.new(ExampleComponent, :junk, "OK")
       end
 
       it "raises an excpetion" do

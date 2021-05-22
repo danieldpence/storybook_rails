@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContentComponentStories < ViewComponent::Storybook::Stories
+class ContentComponentStories < ActionView::Storybook::Stories
   story :default do
     content do
       "Hello World!"

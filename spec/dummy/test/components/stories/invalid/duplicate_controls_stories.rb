@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Invalid
-  class DuplicateControlsStories < ViewComponent::Storybook::Stories
-    story :duplicate_controls, ExampleComponent do
+  class DuplicateControlsStories < ActionView::Storybook::Stories
+    story :duplicate_controls do
       controls do
         title "OK"
         title "Not OK!"

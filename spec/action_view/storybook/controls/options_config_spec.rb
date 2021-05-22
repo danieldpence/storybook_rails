@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::Controls::OptionsConfig do
+RSpec.describe ActionView::Storybook::Controls::OptionsConfig do
   let(:options) { { Red: "red", Blue: "blue", Yellow: "yellow" } }
 
   described_class::TYPES.each do |type|

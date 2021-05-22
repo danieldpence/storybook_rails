@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::StoriesController, type: :request do
+RSpec.describe ActionView::Storybook::StoriesController, type: :request do
   it "returns ok" do
     get "/rails/stories/content_component/default"
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::Controls::NumberConfig do
+RSpec.describe ActionView::Storybook::Controls::NumberConfig do
   described_class::TYPES.each do |number_type|
     context "with '#{number_type}' type" do
       subject { described_class.new(number_type, component, param, value, name: name) }

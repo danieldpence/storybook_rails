@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 shared_examples "a controls config" do
-  let(:component) { Demo::ButtonComponent }
+  let(:component) {  }
   let(:param) { :button_text }
   let(:value) { "OK" }
   let(:name) { nil }

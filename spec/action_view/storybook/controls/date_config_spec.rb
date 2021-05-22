@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::Controls::DateConfig do
+RSpec.describe ActionView::Storybook::Controls::DateConfig do
   subject { described_class.new(component, param, value, name: name) }
 
   shared_examples "valid with object value" do

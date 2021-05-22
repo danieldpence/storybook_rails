@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class ExampleComponent < ViewComponent::Base
-  def initialize(title:)
-    super
-    @title = title
-  end
+# class ExampleComponent < ViewComponent::Base
+#   def initialize(title:)
+#     super
+#     @title = title
+#   end
 
-  private
+#   private
 
-  attr_reader :title
-end
+#   attr_reader :title
+# end

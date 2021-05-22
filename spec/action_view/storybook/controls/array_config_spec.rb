@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::Controls::ArrayConfig do
+RSpec.describe ActionView::Storybook::Controls::ArrayConfig do
   subject { described_class.new(component, param, value, separator, name: name) }
 
   let(:separator) { "," }

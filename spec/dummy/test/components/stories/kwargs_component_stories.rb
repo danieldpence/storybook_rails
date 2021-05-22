@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class KwargsComponentStories < ViewComponent::Storybook::Stories
+class KwargsComponentStories < ActionView::Storybook::Stories
   story :default do
     controls do
       message "Hello World!"

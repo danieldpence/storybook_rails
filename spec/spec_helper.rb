@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "view_component/storybook"
+require "action_view/storybook"
 require "action_view"
 require "action_controller"
 

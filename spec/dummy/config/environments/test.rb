@@ -19,7 +19,7 @@ Dummy::Application.configure do
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection = false
 
-  config.view_component_storybook.show_stories = true
+  config.action_view_storybook.show_stories = true
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr

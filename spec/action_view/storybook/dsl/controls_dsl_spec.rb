@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
+RSpec.describe ActionView::Storybook::Dsl::ControlsDsl do
   subject { described_class.new(ExampleComponent) }
 
   shared_examples "has controls attributes" do |control_attributes|
@@ -14,7 +14,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
     include_examples "has controls attributes", [
       {
-        class: ViewComponent::Storybook::Controls::TextConfig,
+        class: ActionView::Storybook::Controls::TextConfig,
         param: :name,
         name: "Name",
         value: "Jame Doe"
@@ -27,7 +27,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
     include_examples "has controls attributes", [
       {
-        class: ViewComponent::Storybook::Controls::BooleanConfig,
+        class: ActionView::Storybook::Controls::BooleanConfig,
         param: :likes_people,
         name: "Likes People",
         value: true
@@ -41,7 +41,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::NumberConfig,
+          class: ActionView::Storybook::Controls::NumberConfig,
           type: :number,
           param: :number_pets,
           name: "Number Pets",
@@ -58,7 +58,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::NumberConfig,
+          class: ActionView::Storybook::Controls::NumberConfig,
           type: :number,
           param: :number_pets,
           name: "Number Pets",
@@ -77,7 +77,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::NumberConfig,
+          class: ActionView::Storybook::Controls::NumberConfig,
           type: :range,
           param: :number_pets,
           name: "Number Pets",
@@ -94,7 +94,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::NumberConfig,
+          class: ActionView::Storybook::Controls::NumberConfig,
           type: :range,
           param: :number_pets,
           name: "Pets",
@@ -112,7 +112,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
     include_examples "has controls attributes", [
       {
-        class: ViewComponent::Storybook::Controls::ColorConfig,
+        class: ActionView::Storybook::Controls::ColorConfig,
         param: :favorite_color,
         name: "Favorite Color",
         value: "red"
@@ -125,7 +125,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
     include_examples "has controls attributes", [
       {
-        class: ViewComponent::Storybook::Controls::ObjectConfig,
+        class: ActionView::Storybook::Controls::ObjectConfig,
         param: :other_things,
         name: "Other Things",
         value: { hair: "Brown", eyes: "Blue" }
@@ -141,7 +141,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::OptionsConfig,
+          class: ActionView::Storybook::Controls::OptionsConfig,
           type: type.to_sym,
           param: :favorite_food,
           name: "Favorite Food",
@@ -158,7 +158,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::DateConfig,
+          class: ActionView::Storybook::Controls::DateConfig,
           param: :birthday,
           name: "Birthday",
           value: Date.new(1950, 3, 26)
@@ -171,7 +171,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::ArrayConfig,
+          class: ActionView::Storybook::Controls::ArrayConfig,
           param: :sports,
           name: "Sports",
           value: %w[football baseball],
@@ -185,7 +185,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::ObjectConfig,
+          class: ActionView::Storybook::Controls::ObjectConfig,
           param: :other_things,
           name: "Other Things",
           value: { hair: "Brown", eyes: "Blue" }
@@ -198,7 +198,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::NumberConfig,
+          class: ActionView::Storybook::Controls::NumberConfig,
           param: :number_pets,
           name: "Number Pets",
           value: 2
@@ -211,7 +211,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::NumberConfig,
+          class: ActionView::Storybook::Controls::NumberConfig,
           param: :number_pets,
           name: "Number Pets",
           value: 2.5
@@ -224,7 +224,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::BooleanConfig,
+          class: ActionView::Storybook::Controls::BooleanConfig,
           param: :like_people,
           name: "Like People",
           value: true
@@ -237,7 +237,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::BooleanConfig,
+          class: ActionView::Storybook::Controls::BooleanConfig,
           param: :like_people,
           name: "Like People",
           value: false
@@ -250,7 +250,7 @@ RSpec.describe ViewComponent::Storybook::Dsl::ControlsDsl do
 
       include_examples "has controls attributes", [
         {
-          class: ViewComponent::Storybook::Controls::TextConfig,
+          class: ActionView::Storybook::Controls::TextConfig,
           param: :name,
           name: "Name",
           value: "Jame Doe"

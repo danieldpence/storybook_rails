@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ViewComponent::Storybook::Stories do
+RSpec.describe ActionView::Storybook::Stories do
   describe ".valid?" do
     it "duplicate stories are invalid" do
       expect(Invalid::DuplicateStoryStories.valid?).to eq(false)
