@@ -13,7 +13,7 @@ module ActionView
 
       class << self
         def story(name, template = default_template, &block)
-          story_config = StoryConfig.configure(story_id(template), name, default_component, layout, template, &block)
+          story_config = StoryConfig.configure(story_id(name), name, default_component, layout, template, &block)
           story_configs << story_config
           story_config
         end
@@ -116,8 +116,8 @@ module ActionView
           Storybook.stories_path
         end
 
-        def story_id(template)
-          template
+        def story_id(name)
+          "#{stories_name}/#{name.to_s.parameterize}".underscore
         end
       end
 

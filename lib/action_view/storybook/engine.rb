@@ -33,7 +33,7 @@ module ActionView
 
         if options.show_stories
           app.routes.prepend do
-            get "storybook/*stories/:story" => "storybook#show", :internal => true
+            get "storybook/*stories/:story" => "action_view/storybook/stories#show"
           end
         end
       end

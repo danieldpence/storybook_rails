@@ -7,6 +7,7 @@ module ActionView
     class StoriesController < Rails::ApplicationController
       prepend_view_path File.expand_path("../../../views", __dir__)
       prepend_view_path Rails.root.join("app/views") if defined?(Rails.root)
+      prepend_view_path Rails.application.config.action_view_storybook.stories_path
 
       before_action :find_stories, :find_story, only: :show
       before_action :require_local!, unless: :show_stories?
@@ -14,14 +15,10 @@ module ActionView
       content_security_policy(false) if respond_to?(:content_security_policy)
 
       def show
-        component_args = @story.values_from_params(params.permit!.to_h)
+        story_params = @story.values_from_params(params.permit!.to_h)
+        story_params.merge!(story_name: params[:story_name])
 
-        @content_block = @story.content_block
-
-        @component = @story.component.new(**component_args)
-
-        layout = @story.layout
-        render layout: layout unless layout.nil?
+        render template: "#{@story.template}", locals: { story_params: story_params }
       end
 
       private
@@ -38,7 +35,7 @@ module ActionView
       end
 
       def find_story
-        story_name = params[:story]
+        story_name = params[:story_name]
         @story = @stories.find_story(story_name)
         head :not_found unless @story
       end

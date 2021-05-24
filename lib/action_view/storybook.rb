@@ -11,6 +11,7 @@ module ActionView
     autoload :Stories
     autoload :StoryConfig
     autoload :Dsl
+    autoload :Helpers
 
     include ActiveSupport::Configurable
     # Set the location of component previews through app configuration:
