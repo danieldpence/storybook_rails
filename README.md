@@ -3,9 +3,8 @@
 The ActionView::Storybook gem provides Ruby api for writing stories describing Rails partials and allowing them to be previewed and tested in [Storybook](https://github.com/storybookjs/storybook/). This gem is a fork of the fantastic [ViewComponent::Storybook](https://github.com/jonspalmer/view_component_storybook) and has been adapted to work with standard Rails view partials.
 
 ## Features
-* A Ruby DSL for writing Stories describing View Components
+* A Ruby DSL for writing Stories describing standard Rails view templates/partials
 * A Rails controller backend for Storybook Server compatible with Storybook Controls Addon parameters
-* Coming Soon: Rake tasks to watch View Components and Stories and trigger Storybook hot reloading
 
 ## Installation
 
@@ -57,11 +56,10 @@ Equivalent configuration will be necessary in `config/production.rb` or `applica
 
    export const parameters = {
      server: {
-       url: `http://localhost:3000/rails/stories`,
+       url: `http://localhost:3000/storybook`,
      },
    };
    ```
-
 
 ## Usage
 
@@ -69,7 +67,7 @@ Equivalent configuration will be necessary in `config/production.rb` or `applica
 
 `ActionView::Storybook::Stories` provides a way to preview Rails partials in Storybook.
 
-Suppose our app has a shared `_button.html.erb` partial:
+Suppose our app has a shared `app/views/shared/_button.html.erb` partial:
 
 ```erb
 <% variant_class_map = {
@@ -115,21 +113,23 @@ And a story template to render individual stories:
 ```erb
 # buttons/button_stories.html.erb
 
-<%= render partial: "button",
-      button_text: params[:button_text],
-      variant: params[:story_name] %>
+<% story_name_class_map = {
+    primary: "button",
+    secondary: "button-secondary",
+    outline: "button-outline"
+  } %>
+
+<%= render partial: 'shared/button',
+    locals: { variant: story_name, button_text: story_params[:button_text] } %>
 ```
 
-It's up to you how handle rendering your partials in Storybook.
-
-#### Templates
-By default, `action_view_storybook` will expect to find a partial next to your story file called `<whatever>_stories.html.erb`. You can specify a different partial template to be used at the story level. See The Story DSL for more info.
+It's up to you how handle rendering your partials in Storybook, but `ActionView::Storybook` will look for a view template that matches the story name (`buttons/button_stories.html.erb` in the example above. In addition, `ActionView::Storybook` provides a `story_params` helper which provides quick access to the params and args specified in the story config. You can use these parameters in your view template to render each story dynamically. Or not. It's up to you.
 
 ### Generating Storybook Stories JSON
 
 Generate the Storybook JSON stories by running the rake task:
 ```sh
-rake view_component_storybook:write_stories_json
+rake action_view_storybook:write_stories_json
 ```
 
 ### Start the Rails app and Storybook
@@ -140,17 +140,17 @@ In separate shells start the Rails app and Storybook
 rails s
 ```
 ```sh
-yarn storybook
+yarn start-storybook
 ```
 
 Alternatively you can use tools like [Foreman](https://github.com/ddollar/foreman) to start both Rails and Storybook with one command.
 
 ### Configuration
 
-By Default ViewComponent::Storybook expects to find stories in the folder `test/components/stories`. This can be configured but setting `stories_path` in `config/applicaion.rb`. For example is you're using RSpec you might set the following configuration:
+By Default ActionView::Storybook expects to find stories in the folder `test/components/stories`. This can be configured but setting `stories_path` in `config/applicaion.rb`. For example is you're using RSpec you might set the following configuration:
 
 ```ruby
-config.view_component_storybook.stories_path = Rails.root.join("spec/components/stories")
+config.action_view_storybook.stories_path = Rails.root.join("spec/components/stories")
 ```
 
 ### The Story DSL
@@ -170,7 +170,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/jonspalmer/view_component_storybook. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/danieldpence/action_view_storybook. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -178,4 +178,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the ViewComponent::Storybook project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/jonspalmer/view_component_storybook/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the ActionView::Storybook project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/danieldpence/action_view_storybook/blob/master/CODE_OF_CONDUCT.md).
