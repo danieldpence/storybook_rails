@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "action_view/storybook"
 require "action_view"
+require "action_view/storybook"
 require "action_controller"
 
 # Configure Rails Envinronment

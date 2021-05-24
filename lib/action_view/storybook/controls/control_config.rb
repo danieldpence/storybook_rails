@@ -50,6 +50,10 @@ module ActionView
         end
 
         def component_params
+          # TODO: As far as I can tell, the only reason to pass "component"
+          # to the StoryConfig is that is eventually calls .initialize on what is
+          # an instance of ViewComponent in order to validate the story params against
+          # the params accepted by the ViewComponent.
           @component_params ||= component.instance_method(:initialize).parameters
         end
 
