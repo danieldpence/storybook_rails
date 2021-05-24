@@ -32,9 +32,9 @@ module ActionView
         options = app.config.action_view_storybook
 
         if options.show_stories
-          # app.routes.prepend do
-          #   get "storybook/*stories/:story" => "storybook#show", :internal => true
-          # end
+          app.routes.prepend do
+            get "storybook/*stories/:story" => "storybook#show", :internal => true
+          end
         end
       end
 
