@@ -6,8 +6,8 @@ module ActionView
       class ColorConfig < ControlConfig
         attr_reader :preset_colors
 
-        def initialize(component, param, value, name: nil, preset_colors: nil)
-          super(component, param, value, name: name)
+        def initialize(param, value, name: nil, preset_colors: nil)
+          super(param, value, name: name)
           @preset_colors = preset_colors
         end
 

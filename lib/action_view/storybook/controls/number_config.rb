@@ -11,8 +11,8 @@ module ActionView
         validates :type, presence: true
         validates :type, inclusion: { in: TYPES }, unless: -> { type.nil? }
 
-        def initialize(type, component, param, value, min: nil, max: nil, step: nil, name: nil)
-          super(component, param, value, name: name)
+        def initialize(type, param, value, min: nil, max: nil, step: nil, name: nil)
+          super(param, value, name: name)
           @type = type
           @min = min
           @max = max

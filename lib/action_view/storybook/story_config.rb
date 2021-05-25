@@ -5,15 +5,14 @@ module ActionView
     class StoryConfig
       include ActiveModel::Validations
 
-      attr_reader :id, :name, :component, :template
+      attr_reader :id, :name, :template
       attr_accessor :controls, :parameters, :layout, :content_block
 
       validate :valid_controls
 
-      def initialize(id, name, component, layout, template)
+      def initialize(id, name, layout, template)
         @id = id
         @name = name
-        @component = component
         @layout = layout
         @template = template
         @controls = []
@@ -47,8 +46,8 @@ module ActionView
         end.to_h
       end
 
-      def self.configure(id, name, component, layout, template, &configuration)
-        config = new(id, name, component, layout, template)
+      def self.configure(id, name, layout, template, &configuration)
+        config = new(id, name, layout, template)
         ActionView::Storybook::Dsl::StoryDsl.evaluate!(config, &configuration)
         config
       end

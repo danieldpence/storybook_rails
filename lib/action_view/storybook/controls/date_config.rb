@@ -4,8 +4,8 @@ module ActionView
   module Storybook
     module Controls
       class DateConfig < ControlConfig
-        def initialize(component, param, value, name: nil)
-          super(component, param, value, name: name)
+        def initialize(param, value, name: nil)
+          super(param, value, name: name)
         end
 
         def type

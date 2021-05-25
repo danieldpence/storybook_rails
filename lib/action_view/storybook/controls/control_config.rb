@@ -6,20 +6,17 @@ module ActionView
       class ControlConfig
         include ActiveModel::Validations
 
-        attr_reader :component, :param, :value, :name
+        attr_reader :param, :value, :name
 
-        validates :component, :param, presence: true
-        # validates :param, inclusion: { in: ->(control_config) { control_config.component_param_names } }, if: :should_validate_params?
+        validates :param, presence: true
 
-        def initialize(component, param, value, name: nil)
-          @component = component
+        def initialize(param, value, name: nil)
           @param = param
           @value = value
           @name = name || param.to_s.humanize.titlecase
         end
 
         def to_csf_params
-          # validate!
           {
             args: { param => csf_value },
             argTypes: { param => { control: csf_control_params, name: name } }
@@ -28,10 +25,6 @@ module ActionView
 
         def value_from_param(param)
           param
-        end
-
-        def component_param_names
-          @component_param_names ||= component_params&.map(&:last)
         end
 
         private
@@ -43,22 +36,6 @@ module ActionView
 
         def csf_control_params
           { type: type }
-        end
-
-        def component_accepts_kwargs?
-          component_params.map(&:first).include?(:keyrest)
-        end
-
-        def component_params
-          # TODO: As far as I can tell, the only reason to pass "component"
-          # to the StoryConfig is that is eventually calls .initialize on what is
-          # an instance of ViewComponent in order to validate the story params against
-          # the params accepted by the ViewComponent.
-          @component_params ||= component.instance_method(:initialize).parameters
-        end
-
-        def should_validate_params?
-          component.present? && !component_accepts_kwargs?
         end
       end
     end

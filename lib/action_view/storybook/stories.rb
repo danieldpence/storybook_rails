@@ -13,7 +13,7 @@ module ActionView
 
       class << self
         def story(name, template = default_template, &block)
-          story_config = StoryConfig.configure(story_id(name), name, default_component, layout, template, &block)
+          story_config = StoryConfig.configure(story_id(name), name, layout, template, &block)
           story_configs << story_config
           story_config
         end

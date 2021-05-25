@@ -13,7 +13,7 @@ module ActionView
         end
 
         def controls(&block)
-          controls_dsl = ControlsDsl.new(story_config.component)
+          controls_dsl = ControlsDsl.new(story_config)
           controls_dsl.instance_eval(&block)
           @story_config.controls = controls_dsl.controls
         end

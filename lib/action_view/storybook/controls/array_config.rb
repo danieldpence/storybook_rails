@@ -8,8 +8,8 @@ module ActionView
 
         validates :separator, presence: true
 
-        def initialize(component, param, value, separator = ",", name: nil)
-          super(component, param, value, name: name)
+        def initialize(param, value, separator = ",", name: nil)
+          super(param, value, name: name)
           @separator = separator
         end
 
