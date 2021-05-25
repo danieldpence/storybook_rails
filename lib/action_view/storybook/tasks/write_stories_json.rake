@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-namespace :action_view_storybook do
+namespace :storybook_rails do
   desc "Write CSF JSON stories for all Stories"
   task write_stories_json: :environment do
     puts "Writing Stories JSON"
