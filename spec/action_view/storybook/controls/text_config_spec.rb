@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ActionView::Storybook::Controls::TextConfig do
-  subject { described_class.new(component, param, value, name: name) }
+  subject { described_class.new(param, value, name: name) }
 
   let(:type) { :text }
 

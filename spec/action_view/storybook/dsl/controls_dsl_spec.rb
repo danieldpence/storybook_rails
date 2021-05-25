@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe ActionView::Storybook::Dsl::ControlsDsl do
-  subject { described_class.new(ExampleComponent) }
+  subject { described_class.new(ActionView::Storybook::StoryConfig.new("anything", :anything, false, "anything")) }
 
   shared_examples "has controls attributes" do |control_attributes|
     it "has controls with expected attributes" do

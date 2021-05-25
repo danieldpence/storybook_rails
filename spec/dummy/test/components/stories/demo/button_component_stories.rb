@@ -2,6 +2,8 @@
 
 module Demo
   class ButtonComponentStories < ActionView::Storybook::Stories
+    layout "application"
+
     story :short_button do
       controls do
         button_text "OK"

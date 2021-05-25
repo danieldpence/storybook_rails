@@ -35,7 +35,7 @@ module ActionView
       end
 
       def find_story
-        story_name = params[:story_name]
+        story_name = params[:story]
         @story = @stories.find_story(story_name)
         head :not_found unless @story
       end

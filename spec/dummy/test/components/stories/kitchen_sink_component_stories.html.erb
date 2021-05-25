@@ -1,0 +1,11 @@
+<div>
+  <p>My name is <%= story_params[:name] %></p>
+  <p>My Birthday is <%= story_params[:birthday].strftime("%F") %></p>
+  <p>My favorite color is <%= story_params[:favorite_color] %></p>
+  <p>I <%= story_params[:like_people] ? "like" : "do not like" %> people</p>
+  <p>I have <%= story_params[:number_pets] > 0 ? "#{story_params[:number_pets]} #{"pet".pluralize(story_params[:number_pets])}" : "no pets"%></p>
+  <p>I like to watch <%= story_params[:sports].to_sentence %></p>
+  <p>My favorite food is <%= story_params[:favorite_food] %></p>
+  <p>I'm feeling <%= story_params[:mood] %></p>
+  <p>Other things about me <%= story_params[:other_things].to_json %></p>
+</div>

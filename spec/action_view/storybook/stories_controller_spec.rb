@@ -2,31 +2,31 @@
 
 RSpec.describe ActionView::Storybook::StoriesController, type: :request do
   it "returns ok" do
-    get "/rails/stories/content_component/default"
+    get "/storybook/content_component/default"
 
     expect(response).to have_http_status(:ok)
   end
 
   it "returns ok for stories with namespaces" do
-    get "/rails/stories/demo/button_component/short_button"
+    get "/storybook/demo/button_component/short_button"
 
     expect(response).to have_http_status(:ok)
   end
 
   it "renders the compoent" do
-    get "/rails/stories/demo/button_component/short_button"
+    get "/storybook/demo/button_component/short_button"
 
     expect(response.body).to include("<button>OK</button>")
   end
 
   it "renders the kwargs compoent" do
-    get "/rails/stories/kwargs_component/default"
+    get "/storybook/kwargs_component/default"
 
     expect(response.body).to include("<h1>Hello World!</h1>")
   end
 
   it "renders the kitchen sink" do
-    get "/rails/stories/kitchen_sink_component/jane_doe"
+    get "/storybook/kitchen_sink_component/jane_doe"
     body = Nokogiri::HTML(response.body).css("body div").to_html
 
     expected_html = %(<div>
@@ -45,7 +45,7 @@ RSpec.describe ActionView::Storybook::StoriesController, type: :request do
   end
 
   it "renders the kitchen sink with params" do
-    get "/rails/stories/kitchen_sink_component/jane_doe", params: {
+    get "/storybook/kitchen_sink_component/jane_doe", params: {
       name: "John Doe",
       birthday: Date.new(1963, 7, 13).iso8601,
       favorite_color: "green",
@@ -74,38 +74,38 @@ RSpec.describe ActionView::Storybook::StoriesController, type: :request do
   end
 
   it "renders the compoent with supplied parameters" do
-    get "/rails/stories/demo/button_component/short_button", params: { button_text: "My Button" }
+    get "/storybook/demo/button_component/short_button", params: { button_text: "My Button" }
 
     expect(response.body).to include("<button>My Button</button>")
   end
 
   it "ignores query params that don't match the the compoents args " do
-    get "/rails/stories/demo/button_component/short_button", params: { button_text: "My Button", junk: true }
+    get "/storybook/demo/button_component/short_button", params: { button_text: "My Button", junk: true }
 
     expect(response.body).to include("<button>My Button</button>")
   end
 
   it "returns 404 for a stories that don't exist" do
-    get "/rails/stories/missing_component/short_button"
+    get "/storybook/missing_component/short_button"
 
     expect(response).to have_http_status(:not_found)
   end
 
   it "returns 404 for a story that doesn't exist" do
-    get "/rails/stories/demo/button_component/junk"
+    get "/storybook/demo/button_component/junk"
 
     expect(response).to have_http_status(:not_found)
   end
 
   it "returns 404 for a missing story param" do
-    get "/rails/stories/demo/button_component"
+    get "/storybook/demo/button_component"
 
     expect(response).to have_http_status(:not_found)
   end
 
   describe "component content" do
     it "renders the component content" do
-      get "/rails/stories/content_component/default"
+      get "/storybook/content_component/default"
 
       expect(response.body).to include("<h1>Hello World!</h1>")
     end
@@ -113,37 +113,37 @@ RSpec.describe ActionView::Storybook::StoriesController, type: :request do
 
   describe "layout" do
     it "defaults to the application layout" do
-      get "/rails/stories/demo/button_component/short_button"
+      get "/storybook/demo/button_component/short_button"
 
       expect(response.body).to include("<title>Stories Dummy App</title>")
     end
 
     it "allows stories to set the layout" do
-      get "/rails/stories/layout/default"
+      get "/storybook/layout/default"
 
       expect(response.body).to include("<title>Stories Dummy App - Admin</title>")
     end
 
     it "allows story to override the stories layout" do
-      get "/rails/stories/layout/mobile_layout"
+      get "/storybook/layout/mobile_layout"
 
       expect(response.body).to include("<title>Stories Dummy App - Mobile</title>")
     end
 
     it "allows story to override with no layout" do
-      get "/rails/stories/layout/no_layout"
+      get "/storybook/layout/no_layout"
 
       expect(response.body.strip).to eq("<button>OK</button>")
     end
 
     it "allows stories to set no layout" do
-      get "/rails/stories/no_layout/default"
+      get "/storybook/no_layout/default"
 
       expect(response.body.strip).to eq("<button>OK</button>")
     end
 
     it "allows story to override no layout with a layout" do
-      get "/rails/stories/no_layout/mobile_layout"
+      get "/storybook/no_layout/mobile_layout"
 
       expect(response.body).to include("<title>Stories Dummy App - Mobile</title>")
     end

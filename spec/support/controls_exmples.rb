@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 shared_examples "a controls config" do
-  let(:component) {  }
   let(:param) { :button_text }
   let(:value) { "OK" }
   let(:name) { nil }
@@ -37,26 +36,6 @@ shared_examples "a controls config" do
         expect(subject.valid?).to eq(true)
       end
     end
-
-    context "with unsupported param" do
-      let(:param) { :foo }
-
-      it "is invalid" do
-        expect(subject.valid?).to eq(false)
-        expect(subject.errors.size).to eq(1)
-        expect(subject.errors[:param]).to eq(["is not included in the list"])
-      end
-    end
-
-    context "without a component" do
-      let(:component) { nil }
-
-      it "is invalid" do
-        expect(subject.valid?).to eq(false)
-        expect(subject.errors.size).to eq(1)
-        expect(subject.errors[:component]).to eq(["can't be blank"])
-      end
-    end
   end
 
   let(:expected_csf_value) { value }
@@ -84,13 +63,6 @@ shared_examples "a controls config" do
         name_params = { argTypes: { button_text: { name: "Text" } } }
         expect(subject.to_csf_params).to eq(expected_csf_params.deep_merge(name_params))
       end
-    end
-
-    it "calls validate!" do
-      allow(subject).to receive(:validate!).and_raise ActiveModel::ValidationError.new(subject)
-
-      expect { subject.to_csf_params }.to raise_error ActiveModel::ValidationError
-      expect(subject).to have_received(:validate!).once
     end
   end
 
