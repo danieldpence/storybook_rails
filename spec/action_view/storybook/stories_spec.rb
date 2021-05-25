@@ -279,8 +279,7 @@ RSpec.describe ActionView::Storybook::Stories do
   end
 
   describe ".all" do
-    xit "has all stories" do
-      pending("Only returns 7 of the 9 for some reason")
+    it "has all stories" do
       expect(described_class.all).to include(ContentComponentStories,
         Demo::ButtonComponentStories,
         Invalid::DuplicateControlsStories,
