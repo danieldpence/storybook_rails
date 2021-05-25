@@ -16,7 +16,7 @@ module ActionView
     include ActiveSupport::Configurable
     # Set the location of component previews through app configuration:
     #
-    # config.action_view_storybook.stories_path = Rails.root.join("app/views/public/storybook/stories")
+    # config.action_view_storybook.stories_path = Rails.root.join("app/views/storybook/stories")
     #
     mattr_accessor :stories_path, instance_writer: false
 

@@ -16,7 +16,7 @@ module ActionView
 
       def show
         story_params = @story.values_from_params(params.permit!.to_h)
-        story_params.merge!(story_name: params[:story_name])
+        story_params.deep_merge!(story_name: params[:story_name])
 
         render template: "#{@story.template}", layout: @story.layout, locals: { story_params: story_params }
       end

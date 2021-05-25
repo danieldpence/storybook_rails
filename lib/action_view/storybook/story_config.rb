@@ -20,7 +20,7 @@ module ActionView
       end
 
       def to_csf_params
-        # validate!
+        validate!
         csf_params = { 
           name: pretty_name(name),
           parameters: { 

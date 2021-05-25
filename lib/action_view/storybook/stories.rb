@@ -9,7 +9,7 @@ module ActionView
       class_attribute :story_configs, default: []
       class_attribute :parameters, :title, :stories_layout
 
-      # validate :valid_story_configs
+      validate :valid_story_configs
 
       class << self
         def story(name, template = default_template, &block)
@@ -29,7 +29,7 @@ module ActionView
         end
 
         def to_csf_params
-          # validate!
+          validate!
           csf_params = { title: title }
           csf_params[:parameters] = parameters if parameters.present?
           csf_params[:stories] = story_configs.map(&:to_csf_params)
