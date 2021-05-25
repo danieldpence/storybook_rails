@@ -13,6 +13,7 @@ require File.expand_path("dummy/config/environment.rb", __dir__)
 require "rspec/expectations"
 require "rspec/rails"
 require 'simplecov'
+require 'pry'
 SimpleCov.start do
   command_name "rails#{ENV['RAILS_VERSION']}-ruby#{ENV['RUBY_VERSION']}" if ENV["RUBY_VERSION"]
   add_filter 'spec'
