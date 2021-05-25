@@ -5,9 +5,9 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "action_view/storybook/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "action_view_storybook"
+  spec.name          = "storybook_rails"
   spec.version       = ActionView::Storybook::VERSION
-  spec.authors       = ["Jon Palmer", "Daniel Pence"]
+  spec.authors       = ["Daniel Pence"]
   spec.email         = []
 
   spec.summary       = "Storybook for Rails Partials"
