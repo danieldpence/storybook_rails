@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    storybook_rails (0.1.0)
+    storybook_rails (1.0.0)
 
 GEM
   remote: https://rubygems.org/
