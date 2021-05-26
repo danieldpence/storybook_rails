@@ -6,8 +6,7 @@ require "rails"
 require "active_model/railtie"
 require "action_controller/railtie"
 require "action_view/railtie"
-require "view_component/engine"
-require "view_component/storybook/engine"
+require "action_view/storybook/engine"
 require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -16,6 +15,7 @@ Bundler.require(*Rails.groups)
 
 module Dummy
   class Application < Rails::Application
+    config.load_defaults 6.0
     config.secret_key_base = "foo"
   end
 end

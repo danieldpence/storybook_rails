@@ -1,0 +1,33 @@
+# frozen_string_literal: true
+
+require "active_model"
+require "active_support/dependencies/autoload"
+
+module ActionView
+  module Storybook
+    extend ActiveSupport::Autoload
+
+    autoload :Controls
+    autoload :Stories
+    autoload :StoryConfig
+    autoload :Dsl
+    autoload :Helpers
+
+    include ActiveSupport::Configurable
+    # Set the location of component previews through app configuration:
+    #
+    # config.storybook_rails.stories_path = Rails.root.join("app/views/storybook/stories")
+    #
+    mattr_accessor :stories_path, instance_writer: false
+
+    # Enable or disable component previews through app configuration:
+    #
+    # config.storybook_rails.show_stories = false
+    #
+    # Defaults to +true+ for development environment
+    #
+    mattr_accessor :show_stories, instance_writer: false
+
+    ActiveSupport.run_load_hooks(:storybook_rails, self)
+  end
+end

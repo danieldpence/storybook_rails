@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class KitchenSinkComponentStories < ViewComponent::Storybook::Stories
-  story :jane_doe, KitchenSinkComponent do
+class KitchenSinkComponentStories < ActionView::Storybook::Stories
+  story :jane_doe do
     controls do
       name "Jane Doe"
       birthday Date.new(1950, 3, 26)

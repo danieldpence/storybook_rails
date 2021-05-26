@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Demo
-  class ButtonComponentStories < ViewComponent::Storybook::Stories
+  class ButtonComponentStories < ActionView::Storybook::Stories
+    layout "application"
+
     story :short_button do
       controls do
         button_text "OK"

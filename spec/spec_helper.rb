@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "view_component/storybook"
 require "action_view"
+require "action_view/storybook"
 require "action_controller"
 
 # Configure Rails Envinronment
@@ -13,6 +13,7 @@ require File.expand_path("dummy/config/environment.rb", __dir__)
 require "rspec/expectations"
 require "rspec/rails"
 require 'simplecov'
+require 'pry'
 SimpleCov.start do
   command_name "rails#{ENV['RAILS_VERSION']}-ruby#{ENV['RUBY_VERSION']}" if ENV["RUBY_VERSION"]
   add_filter 'spec'

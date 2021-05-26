@@ -1,24 +1,27 @@
-# ViewComponent::Storybook
+# storybook_rails
 
-The ViewComponent::Storybook gem provides Ruby api for writing stories describing [View Components](https://github.com/github/view_component) and allowing them to be previewed and tested in [Storybook](https://github.com/storybookjs/storybook/)
+The `storybook_rails` gem provides a Ruby DSL for writing Storybook stories, allowing you to develop, preview, and test standard Rails view partials in [Storybook](https://github.com/storybookjs/storybook/).
+
+## Prior Art
+This gem is a fork of [ViewComponent::Storybook](https://github.com/jonspalmer/view_component_storybook) and has been adapted to work with standard Rails view partials.
 
 ## Features
-* A Ruby DSL for writing Stories describing View Components
+* A Ruby DSL for writing Stories describing standard Rails view templates/partials
 * A Rails controller backend for Storybook Server compatible with Storybook Controls Addon parameters
-* Coming Soon: Rake tasks to watch View Components and Stories and trigger Storybook hot reloading
+* More to come...
 
 ## Installation
 
 ### Rails Installation
 
-1. Add the `view_component_storybook` gem, to your Gemfile: `gem 'view_component_storybook'`
+1. Add the `storybook_rails` gem, to your Gemfile: `gem 'storybook_rails'`
 2. Run `bundle install`.
-3. Add `require "view_component/storybook/engine"` to `config/application.rb`
+3. Add `require "action_view/storybook/engine"` to `config/application.rb`
 4. Add `**/*.stories.json` to `.gitignore`
 
 #### Configure Asset Hosts
 
-If your view components depend on Javascript, CSS or other assets served by the Rails application you will need to configure `asset_hosts`
+If your views depend on Javascript, CSS or other assets served by the Rails application you will need to configure `asset_hosts`
 apporpriately for your various environments. For local development this is a simple as adding to `config/development.rb`:
 ```ruby
 Rails.application.configure do
@@ -57,51 +60,118 @@ Equivalent configuration will be necessary in `config/production.rb` or `applica
 
    export const parameters = {
      server: {
-       url: `http://localhost:3000/rails/stories`,
+       url: `http://localhost:3000/storybook`,
      },
    };
    ```
 
+#### Webpacker
+If your application uses Webpacker to compile your JavaScript and/or CSS, you will need to modify the default Storybook webpack configuration. Please see the [Storybook Webpack config](https://storybook.js.org/docs/react/configure/webpack) for more information on how to do that. Here's an example:
+
+```javascript
+// .storybook/main.js
+
+const path = require('path');
+const environment = require('../config/webpack/environment');
+const { merge } = require('webpack-merge');
+
+module.exports = {
+  webpackFinal: async (config, { configType }) => {
+    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
+    // You can change the configuration based on that.
+    // 'PRODUCTION' is used when building the static version of storybook.
+    let envConfig = environment.toWebpackConfig();
+
+    let entries = {
+      main: config.entry,
+      application: path.resolve(__dirname, '../app/javascript/packs/application.js')
+    }
+
+    config.entry = entries
+
+    // Storybook doesn't support .scss out of the box
+    config.module.rules.push({
+      test: /\.scss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
+      include: path.resolve(__dirname, '../'),
+    });
+
+    // merge Webpacker's config with Storybook's Webpack config
+    let merged = merge(config, {module: envConfig.module}, {plugins: envConfig.plugins}, {devtool: 'cheap-module-source-map'})
+
+    // Return the altered config
+    return config;
+  },
+};
+```
 
 ## Usage
 
 ### Writing Stories
 
-`ViewComponent::Storybook::Stories` provides a way to preview components in Storybook.
+Suppose our app has a shared `app/views/shared/_button.html.erb` partial:
 
-Suppose our app has a `ButtonComponent` that takes a `button_text` parameter:
+```erb
+<% variant_class_map = {
+  primary: "button",
+  secondary: "button-secondary",
+  outline: "button-outline",
+} %>
+
+<button class="<%= variant_class_map[variant.to_sym] %>">
+  <%= button_text %>
+</button>
+```
+
+We can write a stories describing the `_button.html.erb` partial:
 
 ```ruby
-class ButtonComponent < ViewComponent::Base
-  def initialize(button_text:)
-    @button_text = button_text
+# buttons/button_stories.rb
+
+class Buttons::ButtonStories < ActionView::Storybook::Stories
+  self.title = "Buttons"
+
+  story(:primary) do
+    controls do
+      text(:button_text, "Primary")
+    end
+  end
+
+  story(:secondary) do
+    controls do
+      text(:button_text, "Secondary")
+    end
+  end
+
+  story(:outline) do
+    controls do
+      text(:button_text, "Outline")
+    end
   end
 end
 ```
 
-We can write a stories describing the `ButtonComponent`
+And a story template to render individual stories:
+```erb
+# buttons/button_stories.html.erb
 
-```ruby
-class ButtonComponentStories < ViewComponent::Storybook::Stories
-  story(:with_short_text) do
-    controls do
-      text(:button_text, 'OK')
-    end
-  end
+<% story_name_class_map = {
+    primary: "button",
+    secondary: "button-secondary",
+    outline: "button-outline"
+  } %>
 
-  story(:with_long_text) do
-    controls do
-      text(:button_text, 'Push Me Please!')
-    end
-  end
-end
+<%= render partial: 'shared/button',
+    locals: { variant: story_params[:story_name], button_text: story_params[:button_text] } %>
 ```
+
+It's up to you how handle rendering your partials in Storybook, but `storybook_rails` will look for a view template that matches the story name (`buttons/button_stories.html.erb` in the example above. In addition, `storybook_rails` provides a `story_params` helper which provides quick access to the params and args specified in the story config. You can use these parameters in your view template to render each story dynamically. Or not. It's up to you.
 
 ### Generating Storybook Stories JSON
 
 Generate the Storybook JSON stories by running the rake task:
 ```sh
-rake view_component_storybook:write_stories_json
+rake storybook_rails:write_stories_json
 ```
 
 ### Start the Rails app and Storybook
@@ -112,17 +182,17 @@ In separate shells start the Rails app and Storybook
 rails s
 ```
 ```sh
-yarn storybook
+yarn start-storybook
 ```
 
 Alternatively you can use tools like [Foreman](https://github.com/ddollar/foreman) to start both Rails and Storybook with one command.
 
 ### Configuration
 
-By Default ViewComponent::Storybook expects to find stories in the folder `test/components/stories`. This can be configured but setting `stories_path` in `config/applicaion.rb`. For example is you're using RSpec you might set the following configuration:
+By Default `storybook_rails` expects to find stories in the folder `test/components/stories`. This can be configured but setting `config.storybook_rails.stories_path` in `config/applicaion.rb`. For example, if you're using RSpec you might set the following configuration:
 
 ```ruby
-config.view_component_storybook.stories_path = Rails.root.join("spec/components/stories")
+config.storybook_rails.stories_path = Rails.root.join("spec/components/stories")
 ```
 
 ### The Story DSL
@@ -142,7 +212,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/jonspalmer/view_component_storybook. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/danieldpence/storybook_rails. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -150,4 +220,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the ViewComponent::Storybook project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/jonspalmer/view_component_storybook/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the `storybook_rails` project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/danieldpence/storybook_rails/blob/master/CODE_OF_CONDUCT.md).
