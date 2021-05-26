@@ -8,24 +8,24 @@ Gem::Specification.new do |spec|
   spec.name          = "storybook_rails"
   spec.version       = ActionView::Storybook::VERSION
   spec.authors       = ["Daniel Pence"]
-  spec.email         = []
+  spec.email         = ["danieldpence@users.noreply.github.com"]
 
   spec.summary       = "Storybook for Rails Partials"
   spec.description   = "Generate Storybook CSF JSON for rendering Rails View Partials in Storybook"
-  spec.homepage      = "https://github.com/danieldpence/actionview_storybook"
+  spec.homepage      = "https://github.com/danieldpence/storybook_rails"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
-  # if spec.respond_to?(:metadata)
-  #   spec.metadata["allowed_push_host"] = "https://rubygems.org"
+  if spec.respond_to?(:metadata)
+    spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
-  #   spec.metadata["homepage_uri"] = spec.homepage
-  #   spec.metadata["source_code_uri"] = "https://github.com/jonspalmer/view_component_storybook"
-  # else
-  #   raise "RubyGems 2.0 or newer is required to protect against " \
-  #     "public gem pushes."
-  # end
+    spec.metadata["homepage_uri"] = spec.homepage
+    spec.metadata["source_code_uri"] = "https://github.com/danieldpence/storybook_rails"
+  else
+    raise "RubyGems 2.0 or newer is required to protect against " \
+      "public gem pushes."
+  end
 
   spec.files = Dir["CHANGELOG.md", "LICENSE.txt", "README.md", "app/**/*", "lib/**/*"]
 

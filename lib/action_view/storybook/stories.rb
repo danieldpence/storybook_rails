@@ -96,10 +96,6 @@ module ActionView
           other.story_configs = []
         end
 
-        def default_component
-          name.constantize
-        end
-
         def default_template
           "#{name.chomp("Stories").underscore}_stories"
         end

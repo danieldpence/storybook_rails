@@ -280,7 +280,7 @@ RSpec.describe ActionView::Storybook::Stories do
 
   describe ".all" do
     it "has all stories" do
-      expect(described_class.all).to include(ContentComponentStories,
+      expect(described_class.all).to eq [ContentComponentStories,
         Demo::ButtonComponentStories,
         Invalid::DuplicateControlsStories,
         Invalid::DuplicateStoryStories,
@@ -288,7 +288,7 @@ RSpec.describe ActionView::Storybook::Stories do
         KwargsComponentStories,
         LayoutStories,
         NoLayoutStories,
-        ParametersStories)
+        ParametersStories]
     end
   end
 
