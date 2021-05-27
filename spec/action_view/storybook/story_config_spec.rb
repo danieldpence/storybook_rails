@@ -49,10 +49,10 @@ RSpec.describe ActionView::Storybook::StoryConfig do
           {
             name: "Example Story Config",
             parameters: {
-              server: { 
+              server: {
                 id: "example_story_config",
                 params: {
-                  story_name: "Example Story Config" 
+                  story_name: "Example Story Config"
                 }
               }
             },
@@ -77,7 +77,7 @@ RSpec.describe ActionView::Storybook::StoryConfig do
           {
             name: "Example Story Config",
             parameters: {
-              server: { 
+              server: {
                 id: "example_story_config",
                 params: {
                   story_name: "Example Story Config"

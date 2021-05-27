@@ -20,15 +20,15 @@ module ActionView
 
       def to_csf_params
         validate!
-        csf_params = { 
+        csf_params = {
           name: pretty_name(name),
-          parameters: { 
-            server: { 
+          parameters: {
+            server: {
               id: id,
-              params: { 
-                story_name: name 
-              } 
-            } 
+              params: {
+                story_name: name
+              }
+            }
           }
         }
         csf_params.deep_merge!(parameters: parameters) if parameters.present?
