@@ -35,9 +35,9 @@ jobs:
           - rails_version: 6.0.3.6
             ruby_version: '3.0'
           - rails_version: main
-            ruby_version: 2.5.8
+            ruby_version: 2.5
           - rails_version: main
-            ruby_version: 2.6.6
+            ruby_version: 2.6
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
