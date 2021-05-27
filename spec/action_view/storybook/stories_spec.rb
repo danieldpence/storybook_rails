@@ -21,11 +21,12 @@ RSpec.describe ActionView::Storybook::Stories do
           {
             name: "Default",
             parameters: {
-              server: { 
+              server: {
                 id: "content_component/default",
                 params: {
                   story_name: :default
-                }}
+                }
+              }
             }
           }
         ]
@@ -39,7 +40,7 @@ RSpec.describe ActionView::Storybook::Stories do
           {
             name: "Default",
             parameters: {
-              server: { 
+              server: {
                 id: "kwargs_component/default",
                 params: {
                   story_name: :default
@@ -68,7 +69,7 @@ RSpec.describe ActionView::Storybook::Stories do
           {
             name: "Jane Doe",
             parameters: {
-              server: { 
+              server: {
                 id: "kitchen_sink_component/jane_doe",
                 params: {
                   story_name: :jane_doe
@@ -122,7 +123,7 @@ RSpec.describe ActionView::Storybook::Stories do
           {
             name: "Short Button",
             parameters: {
-              server: { 
+              server: {
                 id: "demo/button_component/short_button",
                 params: {
                   story_name: :short_button
@@ -139,7 +140,7 @@ RSpec.describe ActionView::Storybook::Stories do
           {
             name: "Medium Button",
             parameters: {
-              server: { 
+              server: {
                 id: "demo/button_component/medium_button",
                 params: {
                   story_name: :medium_button
@@ -281,14 +282,14 @@ RSpec.describe ActionView::Storybook::Stories do
   describe ".all" do
     it "has all stories" do
       expect(described_class.all).to eq [ContentComponentStories,
-        Demo::ButtonComponentStories,
-        Invalid::DuplicateControlsStories,
-        Invalid::DuplicateStoryStories,
-        KitchenSinkComponentStories,
-        KwargsComponentStories,
-        LayoutStories,
-        NoLayoutStories,
-        ParametersStories]
+                                         Demo::ButtonComponentStories,
+                                         Invalid::DuplicateControlsStories,
+                                         Invalid::DuplicateStoryStories,
+                                         KitchenSinkComponentStories,
+                                         KwargsComponentStories,
+                                         LayoutStories,
+                                         NoLayoutStories,
+                                         ParametersStories]
     end
   end
 

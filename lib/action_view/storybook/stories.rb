@@ -97,14 +97,14 @@ module ActionView
         end
 
         def default_template
-          "#{name.chomp("Stories").underscore}_stories"
+          "#{name.chomp('Stories').underscore}_stories"
         end
 
         def load_stories
-          if stories_path
-            Dir["#{stories_path}/**/*_stories.rb"].sort.each do |file|
-              require_dependency file
-            end
+          return unless stories_path
+
+          Dir["#{stories_path}/**/*_stories.rb"].sort.each do |file|
+            require_dependency file
           end
         end
 

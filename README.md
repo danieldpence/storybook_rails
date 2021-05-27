@@ -22,7 +22,7 @@ This gem is a fork of [ViewComponent::Storybook](https://github.com/jonspalmer/v
 #### Configure Asset Hosts
 
 If your views depend on Javascript, CSS or other assets served by the Rails application you will need to configure `asset_hosts`
-apporpriately for your various environments. For local development this is a simple as adding to `config/development.rb`:
+appropriately for your various environments. For local development, do this by adding the following to `config/development.rb`:
 ```ruby
 Rails.application.configure do
   ...
@@ -65,7 +65,7 @@ Equivalent configuration will be necessary in `config/production.rb` or `applica
    };
    ```
 
-#### Webpacker
+### Webpacker
 If your application uses Webpacker to compile your JavaScript and/or CSS, you will need to modify the default Storybook webpack configuration. Please see the [Storybook Webpack config](https://storybook.js.org/docs/react/configure/webpack) for more information on how to do that. Here's an example:
 
 ```javascript
@@ -104,6 +104,26 @@ module.exports = {
   },
 };
 ```
+
+### Optional Nice-To-Haves
+#### Setup File-Watching and Automatically run `rake storybook_rails:write_stories_json`
+For a better developer experience, install your favorite file watching utility, such as [chokidar](https://github.com/kimmobrunfeldt/chokidar-cli) and add a couple scripts to enable automatic regeneration of `*.stories.json` files when you update `*_stories.rb` files:
+
+`yarn add -D chokidar-cli`
+
+In package.json:
+```js
+{
+  ...
+  "scripts": {
+    "storybook:start": "rm -rf node_modules/.cache/storybook && start-storybook",
+    "storybook:write-json": "bundle exec rake storybook_rails:write_stories_json",
+    "storybook:watch": "chokidar '**/*_stories.rb' -c 'yarn storybook:write-json'"
+  },
+  ...
+}
+```
+    
 
 ## Usage
 
@@ -193,6 +213,17 @@ By Default `storybook_rails` expects to find stories in the folder `test/compone
 
 ```ruby
 config.storybook_rails.stories_path = Rails.root.join("spec/components/stories")
+```
+
+### Troubleshooting
+#### Restarting Storybook Fails
+If Storybook fails to load with a `cannot get /` error, it could be related to [this issue](https://github.com/storybookjs/storybook/issues/14152). As a workaround, you can update the `yarn storybook` script to remove the `node_modules/.cache/storybook` files before Storybook starts:
+```json
+{
+  "scripts": {
+    "storybook": "rm -rf node_modules/.cache/storybook && start-storybook"
+  }
+}
 ```
 
 ### The Story DSL
