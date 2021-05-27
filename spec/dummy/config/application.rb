@@ -15,7 +15,6 @@ Bundler.require(*Rails.groups)
 
 module Dummy
   class Application < Rails::Application
-    config.load_defaults 6.0
     config.secret_key_base = "foo"
   end
 end
