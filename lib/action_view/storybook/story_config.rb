@@ -59,9 +59,9 @@ module ActionView
       protected
 
       def valid_controls
-        controls.reject(&:valid?).each do |control|
-          errors.add(:controls, :invalid, value: control)
-        end
+        # controls.reject(&:valid?).each do |control|
+        #   errors.add(:controls, :invalid, value: control)
+        # end
 
         control_names = controls.map(&:name)
         duplicate_names = control_names.group_by(&:itself).map { |k, v| k if v.length > 1 }.compact
