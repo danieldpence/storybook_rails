@@ -66,12 +66,15 @@ Equivalent configuration will be necessary in `config/production.rb` or `applica
    ```
 
 ### Webpacker
-If your application uses Webpacker to compile your JavaScript and/or CSS, you will need to modify the default Storybook webpack configuration. Please see the [Storybook Webpack config](https://storybook.js.org/docs/react/configure/webpack) for more information on how to do that. Here's an example:
+If your application uses Webpacker to compile your JavaScript and/or CSS, you will need to modify the default Storybook webpack configuration. Please see the [Storybook Webpack config](https://storybook.js.org/docs/react/configure/webpack) for more information on how to do that.
+
+Here's an example of what that _might_ look like:
 
 ```javascript
 // .storybook/main.js
 
 const path = require('path');
+// Import the Webpacker webpack environment
 const environment = require('../config/webpack/environment');
 const { merge } = require('webpack-merge');
 
@@ -81,7 +84,8 @@ module.exports = {
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
     let envConfig = environment.toWebpackConfig();
-
+    
+    // Tell Webpack to compile an additional entry point, pointing to your Webpacker pack file(s)
     let entries = {
       main: config.entry,
       application: path.resolve(__dirname, '../app/javascript/packs/application.js')
@@ -89,7 +93,8 @@ module.exports = {
 
     config.entry = entries
 
-    // Storybook doesn't support .scss out of the box
+    // Storybook doesn't support .scss out of the box, and we like scss, so...
+    // Add a rule to tell Webpack to process .scss files using these loaders
     config.module.rules.push({
       test: /\.scss$/,
       use: ['style-loader', 'css-loader', 'sass-loader'],
@@ -116,7 +121,8 @@ In package.json:
 {
   ...
   "scripts": {
-    "storybook:start": "rm -rf node_modules/.cache/storybook && start-storybook",
+    "storybook:clean": "find ./test/components/stories -name '*.stories.json' -delete && rm -rf node_modules/.cache/storybook",
+    "storybook:start": "yarn storybook:clean && yarn storybook:write-json && start-storybook -p 8081",
     "storybook:write-json": "bundle exec rake storybook_rails:write_stories_json",
     "storybook:watch": "chokidar '**/*_stories.rb' -c 'yarn storybook:write-json'"
   },
@@ -146,7 +152,7 @@ Suppose our app has a shared `app/views/shared/_button.html.erb` partial:
 We can write a stories describing the `_button.html.erb` partial:
 
 ```ruby
-# buttons/button_stories.rb
+# test/components/stories/buttons/button_stories.rb
 
 class Buttons::ButtonStories < ActionView::Storybook::Stories
   self.title = "Buttons"
@@ -173,7 +179,7 @@ end
 
 And a story template to render individual stories:
 ```erb
-# buttons/button_stories.html.erb
+# test/components/stories/buttons/button_stories.html.erb
 
 <% story_name_class_map = {
     primary: "button",
@@ -226,13 +232,79 @@ If Storybook fails to load with a `cannot get /` error, it could be related to [
 }
 ```
 
+#### Storybook fails to fetch due to CORS
+If the Storybook UI is rendering, but not fetching stories from your Rails server and you see an error in the browser console like this:
+```bash
+Access to fetch at 'http://localhost:3000/storybook/button/primary' from origin 'http://localhost:8081' has been blocked by 
+CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, 
+set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+```
+Then you probably need to setup CORS. Please see [rack-cors](https://github.com/cyu/rack-cors) for examples.
+
 ### The Story DSL
 
-Coming Soon
+🚧  Work in progress... 🚧
 
 #### Parameters
+From the [Storybook CSF docs](https://storybook.js.org/docs/html/writing-stories/parameters):
+> Parameters are a set of static, named metadata about a story, typically used to control the behavior of Storybook features and addons.
+
+Using the example parameters [configuration](https://storybook.js.org/docs/html/essentials/backgrounds#configuration) for the Backgrounds addon, this is how you could accomplish the same parameters using the `parameters` method:
+
+```ruby
+class ButtonStories < ActionView::Storybook::Stories
+  background_data = {
+    default: 'twitter',
+    values: [
+      { name: 'twitter', value: '#00aced' },
+      { name: 'facebook', value: '#3b5998' }
+    ]
+  }
+
+  parameters( { backgrounds: background_data })
+  
+  story(:primary) do
+    parameters({ backgrounds: { default: 'facebook'} })
+    
+    controls do
+      text(:button_text, "Primary")
+    end
+  end
+end
+```
+
+
 #### Layout
+By default, your stories will render without a layout. This can be customized just like you would normally in a Rails controller, by calling `layout "application"`, at either the class level, the story level, or both.
+
+```ruby
+class Buttons::ButtonStories < ActionView::Storybook::Stories
+  self.title = "Buttons"
+  layout "application"
+
+  story(:primary) do
+    controls do
+      text(:button_text, "Primary")
+    end
+  end
+
+  story(:secondary) do
+    controls do
+      text(:button_text, "Secondary")
+    end
+  end
+
+  story(:custom) do
+    controls do
+      text(:button_text, "Custom")
+    end
+    
+    layout "custom"
+  end
+end
+```
 #### Controls
+Coming soon... in the meantime, see https://github.com/danieldpence/storybook_rails/tree/main/lib/action_view/storybook/controls.
 
 
 ## Development
