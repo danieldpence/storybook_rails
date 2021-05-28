@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+class <%= class_name %>Stories < ActionView::Storybook::Stories
+  # story(:story_name) do
+  #   controls do
+  #   end
+  # end 
+end
