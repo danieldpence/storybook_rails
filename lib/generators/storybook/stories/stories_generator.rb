@@ -10,6 +10,9 @@ module Storybook
     argument :stories, type: :array, default: [], banner: "stories"
     check_class_collision suffix: "Stories"
 
+    desc "Generates a stories file with the given NAME (if one does not exist) and " \
+    "optional [stories], and matching view template file."
+
     def create_stories_files
       stories_path = Rails.application.config.storybook_rails.stories_path
       template "stories.rb", "#{stories_path}/#{file_path}_stories.rb"
