@@ -12,6 +12,8 @@ require File.expand_path("dummy/config/environment.rb", __dir__)
 
 require "rspec/expectations"
 require "rspec/rails"
+require 'minitest/autorun'
+require 'minitest/spec'
 require 'simplecov'
 require 'pry'
 SimpleCov.start do

@@ -15,8 +15,9 @@ module Storybook
 
     def create_stories_files
       stories_path = Rails.application.config.storybook_rails.stories_path
-      template "stories.rb", "#{stories_path}/#{file_path}_stories.rb"
-      template "view.html.erb", "#{stories_path}/#{file_path}_stories.html.erb"
+
+      template "stories.rb", File.join("#{stories_path}", "#{file_path}_stories.rb")
+      template "view.html.erb", File.join("#{stories_path}", "#{file_path}_stories.html.erb")
     end
   end
 end
