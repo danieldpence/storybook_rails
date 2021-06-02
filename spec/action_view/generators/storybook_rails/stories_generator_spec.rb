@@ -2,12 +2,12 @@
 
 require 'fileutils'
 require "rails/generators/test_case"
-require "generators/storybook/stories_generator"
+require "generators/storybook_rails/stories_generator"
 
 Rails.application.load_generators
 
 class StoriesGeneratorTest < Rails::Generators::TestCase
-  tests Storybook::StoriesGenerator
+  tests StorybookRails::StoriesGenerator
   destination File.expand_path("../tmp", __dir__)
   setup :prepare_destination
 

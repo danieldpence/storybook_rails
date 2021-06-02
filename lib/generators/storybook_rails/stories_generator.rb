@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 require "rails/generators/named_base"
-require "generators/storybook/stories_generator"
 
-module Storybook
+module StorybookRails
   class StoriesGenerator < Rails::Generators::NamedBase
     source_root File.expand_path("templates", __dir__)
     argument :stories, type: :array, default: [], banner: "stories"

@@ -5,7 +5,7 @@ Description:
 
 Example:
 ========
-    bin/rails generate storybook:stories Button default primary
+    bin/rails generate storybook_rails:stories Button default primary
 
     creates a Button story file and view template:
         Story File:   test/components/button_stories.rb
