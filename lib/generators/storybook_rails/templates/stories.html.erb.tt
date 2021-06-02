@@ -1,0 +1,1 @@
+<div>Render the <%= class_name %> partial here.</div>

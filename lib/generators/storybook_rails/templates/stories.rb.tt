@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+class <%= class_name %>Stories < ActionView::Storybook::Stories
+<%- stories.each do |story_name| -%>
+  story(:<%= story_name %>) do
+    controls do
+    end
+  end
+
+<%- end -%>
+end

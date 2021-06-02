@@ -193,6 +193,13 @@ And a story template to render individual stories:
 
 It's up to you how handle rendering your partials in Storybook, but `storybook_rails` will look for a view template that matches the story name (`buttons/button_stories.html.erb` in the example above. In addition, `storybook_rails` provides a `story_params` helper which provides quick access to the params and args specified in the story config. You can use these parameters in your view template to render each story dynamically. Or not. It's up to you.
 
+### Generating Storybook Files
+`storybook_rails` includes a Rails generator to make it easy to generate the files outlined in the section above.
+
+To generate the files above, we could have done this: `bin/rails generate storybook_rails:stories Button primary secondary outline`.
+
+For more detail, `bin/rails storybook_rails:stories --help`.
+
 ### Generating Storybook Stories JSON
 
 Generate the Storybook JSON stories by running the rake task:
