@@ -26,7 +26,7 @@ class StoriesGeneratorTest < Rails::Generators::TestCase
 
     assert_file "button_stories.rb" do |file|
       assert_match(/class ButtonStories < /, file)
-      assert_match(/story\(\:primary\)/, file)
+      assert_match(/story\(:primary\)/, file)
     end
 
     assert_file "button_stories.html.erb" do |file|
@@ -39,7 +39,7 @@ class StoriesGeneratorTest < Rails::Generators::TestCase
 
     assert_file "buttons/button_stories.rb" do |file|
       assert_match(/class Buttons::ButtonStories < /, file)
-      assert_match(/story\(\:primary\)/, file)
+      assert_match(/story\(:primary\)/, file)
     end
 
     assert_file "buttons/button_stories.html.erb" do |file|
@@ -52,7 +52,7 @@ class StoriesGeneratorTest < Rails::Generators::TestCase
 
     assert_file "buttons/button_stories.rb" do |file|
       assert_match(/class Buttons::ButtonStories < /, file)
-      assert_match(/story\(\:primary\)/, file)
+      assert_match(/story\(:primary\)/, file)
     end
 
     assert_file "buttons/button_stories.html.erb" do |file|
