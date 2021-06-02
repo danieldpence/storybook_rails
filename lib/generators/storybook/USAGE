@@ -1,0 +1,12 @@
+Description:
+============
+    Generates a [NAME]_stories.rb file and matching view template with
+    the given NAME (if one does not exist) and optional [story_names].
+
+Example:
+========
+    bin/rails generate storybook:stories Button default primary
+
+    creates a Button story file and view template:
+        Story File:   test/components/button_stories.rb
+        Template:     test/components/button_component.html.erb
