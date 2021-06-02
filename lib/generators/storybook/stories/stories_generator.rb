@@ -13,11 +13,13 @@ module Storybook
     desc "Generates a stories file with the given NAME (if one does not exist) and " \
     "optional [stories], and matching view template file."
 
+    # :nocov:
     def create_stories_files
       stories_path = Rails.application.config.storybook_rails.stories_path
 
       template "stories.rb", File.join(stories_path.to_s, "#{file_path}_stories.rb")
       template "view.html.erb", File.join(stories_path.to_s, "#{file_path}_stories.html.erb")
     end
+    # :nocov:
   end
 end

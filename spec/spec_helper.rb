@@ -19,6 +19,8 @@ require 'pry'
 SimpleCov.start do
   command_name "rails#{ENV['RAILS_VERSION']}-ruby#{ENV['RUBY_VERSION']}" if ENV["RUBY_VERSION"]
   add_filter 'spec'
+  add_group 'generators', 'lib/generators'
+  add_group 'action_view', 'lib/action_view'
 end
 
 Dir[File.expand_path(File.join(File.dirname(__FILE__), "support", "**", "*.rb"))].sort.each { |f| require f }
