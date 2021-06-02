@@ -49,7 +49,7 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - name: Build and test with Rake
+    - name: Build and test with Rspec
       run: |
         gem install bundler:1.17.3
         bundle update

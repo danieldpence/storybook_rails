@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
+require 'simplecov'
+SimpleCov.start do
+  command_name "rails#{ENV['RAILS_VERSION']}-ruby#{ENV['RUBY_VERSION']}" if ENV["RUBY_VERSION"]
+  add_filter 'spec'
+  add_group 'generators', 'lib/generators'
+  add_group 'action_view', 'lib/action_view'
+end
+
 require "bundler/setup"
-require "action_view"
-require "action_view/storybook"
-require "action_controller"
 
 # Configure Rails Envinronment
 # we need to do this before including capybara
@@ -14,14 +19,7 @@ require "rspec/expectations"
 require "rspec/rails"
 require 'minitest/autorun'
 require 'minitest/spec'
-require 'simplecov'
 require 'pry'
-SimpleCov.start do
-  command_name "rails#{ENV['RAILS_VERSION']}-ruby#{ENV['RUBY_VERSION']}" if ENV["RUBY_VERSION"]
-  add_filter 'spec'
-  add_group 'generators', 'lib/generators'
-  add_group 'action_view', 'lib/action_view'
-end
 
 Dir[File.expand_path(File.join(File.dirname(__FILE__), "support", "**", "*.rb"))].sort.each { |f| require f }
 

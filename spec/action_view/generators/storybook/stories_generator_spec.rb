@@ -2,7 +2,7 @@
 
 require 'fileutils'
 require "rails/generators/test_case"
-require "generators/storybook/stories/stories_generator"
+require "generators/storybook/stories_generator"
 
 Rails.application.load_generators
 
@@ -30,7 +30,7 @@ class StoriesGeneratorTest < Rails::Generators::TestCase
     end
 
     assert_file "button_stories.html.erb" do |file|
-      assert_match("<div>Render the Button partial here.</div>\n", file)
+      assert_match("<div>Render the Button partial here.</div>", file)
     end
   end
 
@@ -43,7 +43,7 @@ class StoriesGeneratorTest < Rails::Generators::TestCase
     end
 
     assert_file "buttons/button_stories.html.erb" do |file|
-      assert_match("<div>Render the Buttons::Button partial here.</div>\n", file)
+      assert_match("<div>Render the Buttons::Button partial here.</div>", file)
     end
   end
 
@@ -56,7 +56,7 @@ class StoriesGeneratorTest < Rails::Generators::TestCase
     end
 
     assert_file "buttons/button_stories.html.erb" do |file|
-      assert_match("<div>Render the Buttons::Button partial here.</div>\n", file)
+      assert_match("<div>Render the Buttons::Button partial here.</div>", file)
     end
   end
 end

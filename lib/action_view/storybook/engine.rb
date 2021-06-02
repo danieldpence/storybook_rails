@@ -39,7 +39,9 @@ module ActionView
       end
 
       rake_tasks do
+        # :nocov:
         load File.join(__dir__, "tasks/write_stories_json.rake")
+        # :nocov:
       end
     end
   end
