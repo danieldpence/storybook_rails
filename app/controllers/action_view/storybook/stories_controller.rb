@@ -6,7 +6,6 @@ module ActionView
   module Storybook
     class StoriesController < Rails::ApplicationController
       prepend_view_path File.expand_path("../../../views", __dir__)
-      prepend_view_path Rails.root.join("app/views") if defined?(Rails.root)
       prepend_view_path Rails.application.config.storybook_rails.stories_path
 
       before_action :find_stories, :find_story, only: :show
