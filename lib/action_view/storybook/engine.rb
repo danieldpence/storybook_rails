@@ -8,6 +8,17 @@ module ActionView
     class Engine < Rails::Engine
       config.storybook_rails = ActiveSupport::OrderedOptions.new
 
+      config.to_prepare do
+        view_path =
+          if defined?(ApplicationController)
+            ::ApplicationController.view_paths
+          else
+            Rails.root.join("app/views")
+          end
+
+        ActionView::Storybook::StoriesController.prepend_view_path view_path
+      end
+
       initializer "storybook_rails.set_configs" do |app|
         options = app.config.storybook_rails
 
